@@ -1,0 +1,213 @@
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;𝓔𝓽𝓱𝓮𝓻𝓮𝓪𝓵 𝓕𝓲𝓵𝓶 𝓒𝓪𝓹𝓽𝓾𝓻𝓮&lt;/title&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600&family=Space+Mono:ital,wght@0,400;1,400&display=swap" rel="stylesheet"&gt;
+    &lt;style&gt;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --cream: #F5F1E8; --warm-cream: #EDE8D8; --sepia: #C4A574; --dark-sepia: #8B7355; --charcoal: #1A1A1A; --soft-gray: #6B6B6B; --film-black: #0D0D0D; }
+        body { font-family: 'Playfair Display', serif; background: linear-gradient(180deg, var(--cream) 0%, var(--warm-cream) 100%); min-height: 100vh; color: var(--charcoal); overflow-x: hidden; position: relative; }
+        .tilde { position: absolute; font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--charcoal); opacity: 0.25; animation: float-tilde 8s infinite ease-in-out; pointer-events: none; z-index: 0; }
+        @keyframes float-tilde { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-15px) rotate(3deg); } }
+        .grain-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; opacity: 0.08; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); animation: grain 0.5s steps(10) infinite; }
+        @keyframes grain { 0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-2%, -2%); } 20% { transform: translate(2%, 2%); } 30% { transform: translate(-1%, 1%); } 40% { transform: translate(1%, -1%); } 50% { transform: translate(-2%, 2%); } 60% { transform: translate(2%, -2%); } 70% { transform: translate(-1%, -1%); } 80% { transform: translate(1%, 1%); } 90% { transform: translate(-2%, -1%); } }
+        .container { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; padding: 40px 20px; min-height: 100vh; display: flex; flex-direction: column; }
+        header { text-align: center; margin-bottom: 40px; position: relative; }
+        .title-decoration { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 6px; color: var(--soft-gray); margin-bottom: 15px; text-transform: uppercase; }
+        h1 { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 400; letter-spacing: 6px; color: var(--charcoal); text-transform: uppercase; position: relative; display: inline-block; }
+        h1::before, h1::after { content: '~'; position: absolute; top: 50%; transform: translateY(-50%); font-family: 'Playfair Display', serif; font-size: 1.5rem; opacity: 0.4; font-weight: 300; }
+        h1::before { left: -40px; } h1::after { right: -40px; }
+        .subtitle { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--soft-gray); margin-top: 12px; letter-spacing: 3px; font-style: italic; }
+        .mode-section { margin-bottom: 30px; text-align: center; }
+        .section-title { font-family: 'Cinzel', serif; font-size: 0.75rem; text-align: center; margin-bottom: 20px; letter-spacing: 4px; text-transform: uppercase; color: var(--soft-gray); position: relative; display: inline-block; }
+        .section-title::before, .section-title::after { content: ''; position: absolute; top: 50%; width: 40px; height: 1px; background: var(--charcoal); opacity: 0.2; }
+        .section-title::before { left: -50px; } .section-title::after { right: -50px; }
+        .mode-grid { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 400px; margin: 0 auto; }
+        .mode-card { background: rgba(255,255,255,0.4); border: 1px solid var(--charcoal); padding: 18px 30px; text-align: center; cursor: pointer; transition: all 0.3s ease; position: relative; width: 100%; max-width: 320px; }
+        .mode-card::before { content: ''; position: absolute; top: 3px; left: 3px; right: -3px; bottom: -3px; border: 1px solid var(--charcoal); opacity: 0.15; z-index: -1; transition: all 0.3s ease; }
+        .mode-card:hover::before, .mode-card.active::before { top: 5px; left: 5px; right: -5px; bottom: -5px; opacity: 0.3; }
+        .mode-card:hover, .mode-card.active { background: rgba(255,255,255,0.7); }
+        .mode-card.active { border-width: 1.5px; }
+        .mode-icon { font-family: 'Space Mono', monospace; font-size: 1.3rem; margin-bottom: 8px; display: block; opacity: 0.7; }
+        .mode-name { font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+        .mode-desc { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--soft-gray); letter-spacing: 1px; }
+        .filter-section { margin-bottom: 30px; text-align: center; }
+        .filter-grid { display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 400px; margin: 0 auto; }
+        .filter-btn { background: transparent; border: 1px solid var(--charcoal); padding: 14px 30px; font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; color: var(--charcoal); width: 100%; max-width: 320px; text-align: center; }
+        .filter-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--charcoal); transition: left 0.3s ease; z-index: -1; }
+        .filter-btn:hover::before, .filter-btn.active::before { left: 0; }
+        .filter-btn:hover, .filter-btn.active { color: var(--cream); }
+        .camera-section { background: rgba(255,255,255,0.3); border: 1px solid var(--charcoal); padding: 25px; position: relative; text-align: center; }
+        .camera-container { position: relative; width: 100%; max-width: 450px; margin: 0 auto; aspect-ratio: 4/3; background: var(--film-black); border: 6px solid var(--film-black); overflow: hidden; box-shadow: 0 0 0 1px var(--charcoal), 0 0 0 2px var(--cream), 0 0 0 3px var(--charcoal), 0 10px 30px rgba(0,0,0,0.25); }
+        #video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        #canvas { display: none; }
+        .camera-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; }
+        .camera-frame { position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px; border: 1px solid rgba(255,255,255,0.2); pointer-events: none; }
+        .camera-corner { position: absolute; width: 20px; height: 20px; border-color: rgba(255,255,255,0.5); border-style: solid; border-width: 0; }
+        .camera-corner.top-left { top: 8px; left: 8px; border-top-width: 1px; border-left-width: 1px; }
+        .camera-corner.top-right { top: 8px; right: 8px; border-top-width: 1px; border-right-width: 1px; }
+        .camera-corner.bottom-left { bottom: 8px; left: 8px; border-bottom-width: 1px; border-left-width: 1px; }
+        .camera-corner.bottom-right { bottom: 8px; right: 8px; border-bottom-width: 1px; border-right-width: 1px; }
+        .countdown { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 5rem; font-family: 'Cinzel', serif; color: white; text-shadow: 0 0 40px rgba(255,255,255,0.9); opacity: 0; transition: opacity 0.2s; z-index: 10; }
+        .countdown.active { opacity: 1; }
+        .camera-status { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 3px; color: rgba(255,255,255,0.7); text-align: center; text-transform: uppercase; }
+        .controls { display: flex; justify-content: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
+        .btn { background: transparent; border: 1px solid var(--charcoal); padding: 12px 30px; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; color: var(--charcoal); }
+        .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--charcoal); transition: left 0.3s ease; z-index: -1; }
+        .btn:hover::before { left: 0; } .btn:hover { color: var(--cream); }
+        .shutter-btn { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--charcoal); background: linear-gradient(145deg, #8B4513 0%, #654321 50%, #4A3018 100%); position: relative; padding: 0; box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.3); }
+        .shutter-btn::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.25); background: linear-gradient(145deg, #A0522D 0%, #8B4513 100%); box-shadow: inset 0 1px 2px rgba(255,255,255,0.15); }
+        .shutter-btn:hover { transform: scale(1.05); } .shutter-btn:active { transform: scale(0.95); }
+        .gallery-section { margin-top: 40px; text-align: center; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; max-width: 500px; margin: 0 auto; }
+        .photo-item { position: relative; cursor: pointer; transition: transform 0.2s ease; }
+        .photo-item:hover { transform: scale(1.02); } .photo-item img { width: 100%; display: block; }
+        .photo-item.film { background: var(--film-black); padding: 20px 24px 40px 24px; position: relative; }
+        .photo-item.film::before, .photo-item.film::after { content: ''; position: absolute; top: 12px; bottom: 32px; width: 10px; background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.4) 6px, transparent 6px, transparent 14px); }
+        .photo-item.film::before { left: 6px; } .photo-item.film::after { right: 6px; }
+        .film-markings { position: absolute; bottom: 12px; left: 24px; right: 24px; display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 0.5rem; color: rgba(255,255,255,0.5); letter-spacing: 1px; }
+        .film-scratches { position: absolute; top: 20px; left: 24px; right: 24px; bottom: 40px; pointer-events: none; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cline x1='10' y1='20' x2='180' y2='25' stroke='rgba(255,255,255,0.15)' stroke-width='0.5'/%3E%3Cline x1='50' y1='80' x2='150' y2='85' stroke='rgba(255,255,255,0.1)' stroke-width='0.5'/%3E%3Cline x1='30' y1='150' x2='170' y2='145' stroke='rgba(255,255,255,0.12)' stroke-width='0.5'/%3E%3C/svg%3E"); opacity: 0.6; }
+        .film-light-leak { position: absolute; top: 20px; left: 24px; width: 60px; height: 60px; background: radial-gradient(circle, rgba(255,200,100,0.15) 0%, transparent 70%); pointer-events: none; }
+        .photo-item.film img { filter: sepia(0.4) contrast(0.95) brightness(0.92) saturate(0.7); display: block; }
+        .photo-item.dreamy { background: linear-gradient(180deg, #F8E8EC 0%, #EDE8F8 50%, #F5E8F0 100%); padding: 24px; position: relative; border-radius: 12px; box-shadow: 0 0 30px rgba(255,182,193,0.3), inset 0 0 20px rgba(255,255,255,0.5); }
+        .photo-item.dreamy::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 30%, transparent 70%, rgba(255,230,240,0.3) 100%); border-radius: 12px; pointer-events: none; z-index: 2; }
+        .photo-item.dreamy::after { content: ''; position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; border: 1px solid rgba(255,182,193,0.3); border-radius: 8px; box-shadow: inset 0 0 20px rgba(255,182,193,0.2), 0 0 15px rgba(255,200,220,0.4); pointer-events: none; }
+        .dreamy-light-ray { position: absolute; width: 2px; height: 100%; background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.6) 20%, rgba(255,230,240,0.4) 50%, rgba(255,255,255,0.3) 80%, transparent 100%); filter: blur(1px); opacity: 0.5; animation: shimmer 3s infinite ease-in-out; }
+        .dreamy-light-ray.r1 { left: 25%; animation-delay: 0s; } .dreamy-light-ray.r2 { left: 50%; animation-delay: -1s; } .dreamy-light-ray.r3 { left: 75%; animation-delay: -2s; }
+        @keyframes shimmer { 0%, 100% { opacity: 0.3; transform: scaleX(1); } 50% { opacity: 0.7; transform: scaleX(1.5); } }
+        .dreamy-butterfly { position: absolute; font-size: 1.4rem; filter: drop-shadow(0 0 4px rgba(255,182,193,0.8)); animation: float-butterfly 4s infinite ease-in-out; z-index: 3; }
+        .dreamy-butterfly.b1 { top: -10px; left: 18%; animation-delay: 0s; } .dreamy-butterfly.b2 { top: 35%; right: -8px; animation-delay: -1.3s; } .dreamy-butterfly.b3 { bottom: 8%; left: -8px; animation-delay: -2.6s; } .dreamy-butterfly.b4 { bottom: -10px; right: 22%; animation-delay: -3.9s; }
+        @keyframes float-butterfly { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-12px) rotate(8deg); } }
+        .dreamy-sparkle { position: absolute; width: 5px; height: 5px; background: radial-gradient(circle, white 0%, transparent 70%); border-radius: 50%; box-shadow: 0 0 10px 2px rgba(255,255,255,0.8), 0 0 20px rgba(255,200,220,0.5); animation: sparkle-twinkle 2s infinite ease-in-out; }
+        .dreamy-sparkle.s1 { top: 8%; left: 12%; animation-delay: 0s; } .dreamy-sparkle.s2 { top: 55%; right: 10%; animation-delay: -0.6s; } .dreamy-sparkle.s3 { bottom: 15%; left: 18%; animation-delay: -1.2s; } .dreamy-sparkle.s4 { top: 35%; left: 6%; animation-delay: -1.8s; } .dreamy-sparkle.s5 { bottom: 30%; right: 15%; animation-delay: -2.4s; }
+        @keyframes sparkle-twinkle { 0%, 100% { opacity: 0.4; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.3); } }
+        .dreamy-cloud { position: absolute; background: radial-gradient(ellipse, rgba(255,255,255,0.8) 0%, transparent 70%); border-radius: 50%; filter: blur(2px); opacity: 0.7; }
+        .dreamy-cloud.c1 { top: 8px; left: 25%; width: 50px; height: 18px; } .dreamy-cloud.c2 { bottom: 8px; right: 18%; width: 40px; height: 14px; } .dreamy-cloud.c3 { top: 40%; left: 5px; width: 25px; height: 35px; }
+        .dreamy-grain { position: absolute; top: 24px; left: 24px; right: 24px; bottom: 24px; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); opacity: 0.12; pointer-events: none; mix-blend-mode: overlay; border-radius: 4px; }
+        .photo-item.dreamy img { filter: brightness(1.05) saturate(0.85) contrast(0.88) sepia(0.08); border-radius: 6px; position: relative; z-index: 1; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .photo-item.y2k { background: #C0C0C0; padding: 0; border: 2px solid #808080; box-shadow: inset -2px -2px #404040, inset 2px 2px #FFFFFF, 3px 3px 0 rgba(0,0,0,0.3); }
+        .y2k-titlebar { background: linear-gradient(90deg, #000080 0%, #1084d0 100%); padding: 4px 8px; display: flex; justify-content: space-between; align-items: center; }
+        .y2k-title { font-family: 'MS Sans Serif', 'Arial', sans-serif; font-size: 0.65rem; color: white; font-weight: bold; }
+        .y2k-buttons { display: flex; gap: 3px; }
+        .y2k-btn { width: 12px; height: 10px; background: #C0C0C0; border: 1px solid #FFFFFF; border-right-color: #404040; border-bottom-color: #404040; font-size: 0.5rem; display: flex; align-items: center; justify-content: center; color: #000; }
+        .y2k-content { padding: 12px; background: #C0C0C0; position: relative; }
+        .y2k-pixel-heart { position: absolute; font-size: 0.9rem; opacity: 0.8; }
+        .y2k-pixel-heart.h1 { top: 20px; left: 5px; } .y2k-pixel-heart.h2 { top: 50%; right: 5px; } .y2k-pixel-heart.h3 { bottom: 20px; left: 8px; }
+        .y2k-icon { position: absolute; width: 16px; height: 16px; background: #C0C0C0; border: 1px solid #404040; font-size: 0.5rem; display: flex; align-items: center; justify-content: center; }
+        .y2k-icon.i1 { top: 25%; left: 3px; } .y2k-icon.i2 { bottom: 25%; right: 3px; }
+        .y2k-emoticon { position: absolute; font-family: 'MS Sans Serif', sans-serif; font-size: 0.7rem; color: #000080; background: white; padding: 2px 4px; border: 1px solid #808080; }
+        .y2k-emoticon.e1 { top: 35%; right: 2px; transform: rotate(5deg); } .y2k-emoticon.e2 { bottom: 35%; left: 2px; transform: rotate(-5deg); }
+        .photo-item.y2k img { filter: saturate(0.4) contrast(1.15) brightness(1.08); image-rendering: pixelated; display: block; border: 1px solid #808080; }
+        .photo-date { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--soft-gray); text-align: center; margin-top: 8px; letter-spacing: 1px; text-transform: uppercase; }
+        .hidden { display: none !important; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .lightbox.active { display: flex; } .lightbox-content { max-width: 90%; max-height: 85%; position: relative; }
+        .lightbox-content img { max-width: 100%; max-height: 70vh; object-fit: contain; }
+        .lightbox-close { position: absolute; top: -40px; right: 0; color: white; font-size: 1.5rem; cursor: pointer; font-family: 'Space Mono', monospace; }
+        .lightbox-actions { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .lightbox-btn { background: transparent; border: 1px solid white; color: white; padding: 10px 25px; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+        .lightbox-btn:hover { background: white; color: black; }
+        .flash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none; opacity: 0; }
+        .flash-overlay.film-active { background: white; animation: flash-anim 0.4s ease-out; }
+        .flash-overlay.dreamy-active { background: radial-gradient(circle at center, rgba(255,240,245,0.95) 0%, rgba(255,230,240,0.8) 40%, rgba(240,230,255,0.6) 70%, transparent 100%); animation: dreamy-flash 0.8s ease-out; }
+        .flash-overlay.y2k-active { background: white; animation: flash-anim 0.3s steps(3); }
+        @keyframes flash-anim { 0% { opacity: 0.95; } 100% { opacity: 0; } }
+        @keyframes dreamy-flash { 0% { opacity: 0.9; transform: scale(1); } 30% { opacity: 0.7; transform: scale(1.02); } 60% { opacity: 0.4; transform: scale(1.01); } 100% { opacity: 0; transform: scale(1); } }
+        @media (max-width: 600px) { h1::before, h1::after { display: none; } .gallery { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 400px) { .gallery { grid-template-columns: 1fr; } }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="grain-overlay"&gt;&lt;/div&gt;
+    &lt;div class="flash-overlay" id="flash-overlay"&gt;&lt;/div&gt;
+    &lt;div class="lightbox" id="lightbox"&gt;
+        &lt;div class="lightbox-content"&gt;
+            &lt;div class="lightbox-close" onclick="closeLightbox()"&gt;×&lt;/div&gt;
+            &lt;img id="lightbox-img" src="" alt=""&gt;
+            &lt;div class="lightbox-actions"&gt;
+                &lt;button class="lightbox-btn" onclick="downloadFromLightbox()"&gt;Save&lt;/button&gt;
+                &lt;button class="lightbox-btn" onclick="closeLightbox()"&gt;Close&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;span class="tilde" style="top: 12%; left: 8%; animation-delay: 0s;"&gt;~&lt;/span&gt;
+    &lt;span class="tilde" style="top: 22%; right: 12%; animation-delay: -2s;"&gt;~&lt;/span&gt;
+    &lt;span class="tilde" style="top: 65%; left: 5%; animation-delay: -4s;"&gt;~&lt;/span&gt;
+    &lt;span class="tilde" style="top: 78%; right: 8%; animation-delay: -6s;"&gt;~&lt;/span&gt;
+    &lt;span class="tilde" style="top: 35%; left: 88%; font-size: 1.2rem; animation-delay: -1s;"&gt;~&lt;/span&gt;
+    &lt;span class="tilde" style="bottom: 25%; left: 15%; font-size: 1.4rem; animation-delay: -3s;"&gt;~&lt;/span&gt;
+    &lt;div class="container"&gt;
+        &lt;header&gt;
+            &lt;div class="title-decoration"&gt;Analog Photography&lt;/div&gt;
+            &lt;h1&gt;Ethereal Film&lt;/h1&gt;
+            &lt;p class="subtitle"&gt;capture moments in timeless beauty&lt;/p&gt;
+        &lt;/header&gt;
+        &lt;section class="mode-section"&gt;
+            &lt;h2 class="section-title"&gt;Format&lt;/h2&gt;
+            &lt;div class="mode-grid"&gt;
+                &lt;div class="mode-card active" data-mode="single"&gt;&lt;span class="mode-icon"&gt;[□]&lt;/span&gt;&lt;div class="mode-name"&gt;Single&lt;/div&gt;&lt;div class="mode-desc"&gt;one perfect frame&lt;/div&gt;&lt;/div&gt;
+                &lt;div class="mode-card" data-mode="life4cut-a"&gt;&lt;span class="mode-icon"&gt;[▮▮&lt;br&gt;▮▮]&lt;/span&gt;&lt;div class="mode-name"&gt;4-Cut A&lt;/div&gt;&lt;div class="mode-desc"&gt;four frames vertical&lt;/div&gt;&lt;/div&gt;
+                &lt;div class="mode-card" data-mode="life4cut-b"&gt;&lt;span class="mode-icon"&gt;[▮▮]&lt;br&gt;[▮▮]&lt;/span&gt;&lt;div class="mode-name"&gt;4-Cut B&lt;/div&gt;&lt;div class="mode-desc"&gt;2×2 grid layout&lt;/div&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+        &lt;section class="filter-section"&gt;
+            &lt;h2 class="section-title"&gt;Aesthetic&lt;/h2&gt;
+            &lt;div class="filter-grid"&gt;
+                &lt;button class="filter-btn active" data-style="film"&gt;&lt;span style="font-family: 'Cinzel', serif;"&gt;菲林&lt;/span&gt; — Film&lt;/button&gt;
+                &lt;button class="filter-btn" data-style="dreamy"&gt;&lt;span style="font-family: 'Cinzel', serif;"&gt;梦核&lt;/span&gt; — Dreamcore&lt;/button&gt;
+                &lt;button class="filter-btn" data-style="y2k"&gt;&lt;span style="font-family: 'Cinzel', serif;"&gt;千禧&lt;/span&gt; — Y2K&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/section&gt;
+        &lt;section class="camera-section"&gt;
+            &lt;div class="camera-container"&gt;
+                &lt;video id="video" autoplay playsinline&gt;&lt;/video&gt;
+                &lt;canvas id="canvas"&gt;&lt;/canvas&gt;
+                &lt;div class="camera-frame"&gt;&lt;/div&gt;
+                &lt;div class="camera-corner top-left"&gt;&lt;/div&gt;&lt;div class="camera-corner top-right"&gt;&lt;/div&gt;&lt;div class="camera-corner bottom-left"&gt;&lt;/div&gt;&lt;div class="camera-corner bottom-right"&gt;&lt;/div&gt;
+                &lt;div class="countdown" id="countdown"&gt;3&lt;/div&gt;
+                &lt;div class="camera-overlay"&gt;&lt;div class="camera-status"&gt;~ Rec ~&lt;/div&gt;&lt;div class="camera-status" id="frames-left"&gt;&lt;/div&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="controls"&gt;&lt;button class="btn" id="start-camera"&gt;Initialize&lt;/button&gt;&lt;button class="shutter-btn hidden" id="capture-btn"&gt;&lt;/button&gt;&lt;/div&gt;
+        &lt;/section&gt;
+        &lt;section class="gallery-section hidden" id="gallery-section"&gt;
+            &lt;h2 class="section-title"&gt;Memories&lt;/h2&gt;
+            &lt;div class="gallery" id="gallery"&gt;&lt;/div&gt;
+        &lt;/section&gt;
+    &lt;/div&gt;
+        function addPhotoToGallery(styledImageSrc, style, mode) {
+            gallerySection.classList.remove('hidden');
+            const index = capturedPhotos.length; capturedPhotos.push(styledImageSrc);
+            const item = document.createElement('div'); item.className = 'photo-item ' + style; item.onclick = () =&gt; openLightbox(index);
+            if (style === 'film') {
+                const scratches = document.createElement('div'); scratches.className = 'film-scratches'; item.appendChild(scratches);
+                const leak = document.createElement('div'); leak.className = 'film-light-leak'; item.appendChild(leak);
+                const markings = document.createElement('div'); markings.className = 'film-markings'; markings.innerHTML = '&lt;span&gt;KODAK&lt;/span&gt;&lt;span&gt;35mm&lt;/span&gt;'; item.appendChild(markings);
+            } else if (style === 'dreamy') {
+                ['r1', 'r2', 'r3'].forEach(cls =&gt; { const r = document.createElement('div'); r.className = 'dreamy-light-ray ' + cls; item.appendChild(r); });
+                ['b1', 'b2', 'b3', 'b4'].forEach(cls =&gt; { const b = document.createElement('span'); b.className = 'dreamy-butterfly ' + cls; b.textContent = '🦋'; item.appendChild(b); });
+                ['s1', 's2', 's3', 's4', 's5'].forEach(cls =&gt; { const s = document.createElement('span'); s.className = 'dreamy-sparkle ' + cls; item.appendChild(s); });
+                ['c1', 'c2', 'c3'].forEach(cls =&gt; { const c = document.createElement('div'); c.className = 'dreamy-cloud ' + cls; item.appendChild(c); });
+                const grain = document.createElement('div'); grain.className = 'dreamy-grain'; item.appendChild(grain);
+            } else if (style === 'y2k') {
+                const titlebar = document.createElement('div'); titlebar.className = 'y2k-titlebar'; titlebar.innerHTML = '&lt;span class="y2k-title"&gt;Photo.exe&lt;/span&gt;&lt;div class="y2k-buttons"&gt;&lt;span class="y2k-btn"&gt;_&lt;/span&gt;&lt;span class="y2k-btn"&gt;□&lt;/span&gt;&lt;span class="y2k-btn"&gt;×&lt;/span&gt;&lt;/div&gt;'; item.appendChild(titlebar);
+                const content = document.createElement('div'); content.className = 'y2k-content';
+                ['h1', 'h2', 'h3'].forEach(cls =&gt; { const h = document.createElement('span'); h.className = 'y2k-pixel-heart ' + cls; h.textContent = '♥'; content.appendChild(h); });
+                ['i1', 'i2'].forEach(cls =&gt; { const ic = document.createElement('div'); ic.className = 'y2k-icon ' + cls; ic.textContent = '▼'; content.appendChild(ic); });
+                ['e1', 'e2'].forEach(cls =&gt; { const e = document.createElement('span'); e.className = 'y2k-emoticon ' + cls; e.textContent = cls === 'e1' ? ':-)' : ';-)'; content.appendChild(e); });
+                const img = document.createElement('img'); img.src = styledImageSrc; content.appendChild(img); item.appendChild(content);
+            }
+            if (style !== 'y2k') { const img = document.createElement('img'); img.src = styledImageSrc; item.appendChild(img); }
+            gallery.insertBefore(item, gallery.firstChild);
+        }
+
+        function openLightbox(index) { currentLightboxIndex = index; lightboxImg.src = capturedPhotos[index]; lightbox.classList.add('active'); }
+        function closeLightbox() { lightbox.classList.remove('active'); currentLightboxIndex = -1; }
+        function downloadFromLightbox() { if (currentLightboxIndex &gt;= 0) { const link = document.createElement('a'); link.download = 'ethereal-' + Date.now() + '.jpg'; link.href = capturedPhotos[currentLightboxIndex]; link.click(); } }
+        lightbox.addEventListener('click', (e) =&gt; { if (e.target === lightbox) closeLightbox(); });
+        function resetCapture() { life4CutPhotos = []; framesLeftEl.textContent = ''; }
+        function sleep(ms) { return new Promise(resolve =&gt; setTimeout(resolve, ms)); }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
